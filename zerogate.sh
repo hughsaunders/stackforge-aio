@@ -7,4 +7,5 @@ chef_zero
 knife
 populate_chef_server
 configure_chef_client
+chef-client
 exerstack
