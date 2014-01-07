@@ -95,6 +95,8 @@ populate_chef_server(){
 configure_chef_client(){
     env=${1:-example}
     host=${2:-localhost}
+    mkdir -p /etc/chef
+    cp ~/.chef/no_auth_but_still_need_a_random_pem.pem /etc/chef/validation.pem
     knife bootstrap -E $env --run-list 'role[allinone-compute]' $host
 }
 
