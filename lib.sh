@@ -78,7 +78,6 @@ client_key        '~/.chef/no_auth_but_still_need_a_random_pem.pem'
 EOF
 
     setup_ssh
-    knife bootstrap localhost
 }
 
 populate_chef_server(){
