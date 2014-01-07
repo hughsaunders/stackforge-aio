@@ -7,10 +7,11 @@ git_clone(){
     git clone $1
 }
 
-generate_ssh_keypair(){
+setup_ssh(){
     mkdir -p ~/.ssh
     [ -f ~/.ssh/id_rsa ] || ssh-keygen -N '' -f ~/.ssh/id_rsa
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+    echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
     ssh localhost date
 }
 
@@ -69,7 +70,7 @@ node_name         '$HOSTNAME'
 client_key        '~/.chef/no_auth_but_still_need_a_random_pem.pem'
 EOF
 
-    generate_ssh_keypair
+    setup_ssh
     knife bootstrap localhost
 }
 
