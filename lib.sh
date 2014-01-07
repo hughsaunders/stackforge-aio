@@ -14,6 +14,11 @@ setup_ssh(){
     [ -f $HOME/.ssh/id_rsa ] || ssh-keygen -N '' -f ~/.ssh/id_rsa
     cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
     echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+
+    # Jenkins mangles ssh config file? 
+    sed -ie 's/PermitRootLogin no//' /etc/ssh/sshd_config
+    /etc/init.d/ssh restart
+
     ssh $user@localhost date
 }
 
