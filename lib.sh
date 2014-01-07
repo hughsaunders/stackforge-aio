@@ -18,7 +18,7 @@ chef_zero(){
    # Install chef-zero server
    install_package ruby1.9.3 build-essential screen
    which chef-zero || gem install chef-zero
-   screen -x chef-zero -X quit >/dev/null
+   screen -x chef-zero -X quit >/dev/null ||:
    screen -d -m -S chef-zero chef-zero
 }
 
