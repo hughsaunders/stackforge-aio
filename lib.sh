@@ -9,10 +9,10 @@ git_clone(){
 
 setup_ssh(){
     # under sudo, ~ expands to non-sudo user dir
-    user=${1:-root}
-    mkdir -p /home/$user/.ssh
-    [ -f /home/$user/.ssh/id_rsa ] || ssh-keygen -N '' -f ~/.ssh/id_rsa
-    cat /home/$user/.ssh/id_rsa.pub >> /home/$user/.ssh/authorized_keys
+    user=$(whoami)
+    mkdir -p $HOME/.ssh
+    [ -f $HOME/.ssh/id_rsa ] || ssh-keygen -N '' -f ~/.ssh/id_rsa
+    cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
     echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
     ssh $user@localhost date
 }
