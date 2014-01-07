@@ -4,7 +4,7 @@
 . ./lib.sh
 
 chef_zero
-knife
+setup_knife
 populate_chef_server
 configure_chef_client
 chef-client

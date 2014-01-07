@@ -25,7 +25,7 @@ chef_zero(){
    screen -d -m -S chef-zero chef-zero
 }
 
-knife(){
+setup_knife(){
    # Install chef client
    which knife >/dev/null \
        || curl -L https://www.opscode.com/chef/install.sh | sudo bash
