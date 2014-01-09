@@ -84,6 +84,7 @@ populate_chef_server(){
     git_clone https://github.com/stackforge/openstack-chef-repo
     gem install berkshelf
     pushd openstack-chef-repo
+    rm Berksfile.lock
     berks install
     berks upload
     knife role from file roles/*.rb
