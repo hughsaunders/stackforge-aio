@@ -20,7 +20,7 @@ apply_gerrit_patch
 chef-client -o 'role[allinone-compute]'
 
 # import openstack credentials
-. openrc
+. /root/openrc
 
 # Add ubuntu image to glance
 prepare_ubuntu_image
