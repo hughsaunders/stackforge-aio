@@ -1,5 +1,8 @@
 #!/bin/bash -xe
 
+# Import job environment variables
+[ -f /tmp/env ] && . /tmp/env
+
 # Import functions
 . ./lib.sh
 
