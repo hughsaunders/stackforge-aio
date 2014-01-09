@@ -100,6 +100,12 @@ configure_chef_client(){
     knife bootstrap -E $env --run-list 'role[allinone-compute]' $host
 }
 
+prepare_ubuntu_image(){
+    wget http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
+    glance image-create --name=precise --disk-format=qcow2 --container-format=ovf --is-public=True <precise-server-cloudimg-amd64-disk1.img
+    nova flavor-create small 10 256 30 1
+}
+
 exerstack(){
-    git_clone https://github.com/rcpbops/exerstack
+    git_clone https://github.com/rcbops/exerstack
 }
