@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 # Import job environment variables
-[ -f /tmp/env ] && . /tmp/env
+[ -f gerrit_env ] && . gerrit_env
 
 # Import functions
 . ./lib.sh

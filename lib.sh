@@ -92,6 +92,14 @@ populate_chef_server(){
     popd
 }
 
+store_env_vars(){
+    cat >gerrit_env <<EOF
+GERRIT_HOST="$GERRIT_HOST"
+GERRIT_PROJECT="$GERRIT_PROJECT"
+GERRIT_REFSPEC="$GERRIT_REFSPEC"
+EOF
+}
+
 apply_gerrit_patch(){
     GERRIT_REPO="https://${GERRIT_HOST}/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
