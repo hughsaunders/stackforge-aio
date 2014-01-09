@@ -92,6 +92,17 @@ populate_chef_server(){
     popd
 }
 
+apply_gerrit_patch(){
+    GERRIT_REPO="https://${GERRIT_HOST}/${GERRIT_PROJECT}"
+    PROJECT_SHORT=$(basename $GERRIT_PROJECT)
+    git clone $GERRIT_REPO
+    pushd $PROJECT_SHORT
+    git fetch https://${GERRIT_HOST}/${GERRIT_PROJECT} $GERRIT_REFSPEC
+    git checkout FETCH_HEAD
+    popd
+    knife cookbook upload -o . $PROJECT_SHORT
+}
+
 configure_chef_client(){
     env=${1:-example}
     host=${2:-localhost}
