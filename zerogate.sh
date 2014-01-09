@@ -8,13 +8,13 @@
 chef_zero
 setup_knife
 populate_chef_server
-configure_chef_client
+bootstrap_chef_client
 
 # apply change specific to this gate
 apply_gerrit_patch
 
 # Deploy openstack
-chef-client
+chef-client -o 'role[allinone-compute]'
 
 # import openstack credentials
 . openrc

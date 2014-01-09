@@ -103,12 +103,12 @@ apply_gerrit_patch(){
     knife cookbook upload -o . $PROJECT_SHORT
 }
 
-configure_chef_client(){
+bootstrap_chef_client(){
     env=${1:-example}
     host=${2:-localhost}
     mkdir -p /etc/chef
     cp ~/.chef/no_auth_but_still_need_a_random_pem.pem /etc/chef/validation.pem
-    knife bootstrap -E $env --run-list 'role[allinone-compute]' $host
+    knife bootstrap -E $env $host
 }
 
 prepare_ubuntu_image(){
