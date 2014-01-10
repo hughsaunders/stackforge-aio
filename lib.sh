@@ -104,7 +104,7 @@ apply_gerrit_patch(){
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
     git clone $GERRIT_REPO
     pushd $PROJECT_SHORT
-    git fetch https://${GERRIT_HOST}/${GERRIT_PROJECT} $GERRIT_REFSPEC
+    git fetch $GERRIT_REPO $GERRIT_REFSPEC
     git checkout FETCH_HEAD
     popd
     knife cookbook upload -o . $PROJECT_SHORT
