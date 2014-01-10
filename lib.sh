@@ -107,7 +107,7 @@ apply_gerrit_patch(){
     git fetch $GERRIT_REPO $GERRIT_REFSPEC
     git checkout FETCH_HEAD
     popd
-    knife cookbook upload -o . $PROJECT_SHORT
+    knife cookbook upload --force -o . $PROJECT_SHORT
 }
 
 bootstrap_chef_client(){
@@ -119,11 +119,14 @@ bootstrap_chef_client(){
 }
 
 prepare_ubuntu_image(){
-    wget http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
+    wget --no-verbose http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
     glance image-create --name=precise --disk-format=qcow2 --container-format=ovf --is-public=True <precise-server-cloudimg-amd64-disk1.img
     nova flavor-create small 10 256 30 1
 }
 
 exerstack(){
     git_clone https://github.com/rcbops/exerstack
+    pushd exerstack
+    ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    popd
 }
