@@ -125,7 +125,7 @@ prepare_ubuntu_image(){
 }
 
 prepare_cinder_lvm(){
-    apt-get -y install lvm2
+    install_package lvm2
     truncate cinder.img --size 50G
     losetup -f cinder.img
     loopdev=$(losetup --show -f cinder.img)
