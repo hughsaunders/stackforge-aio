@@ -82,7 +82,7 @@ EOF
 
 populate_chef_server(){
     git_clone https://github.com/stackforge/openstack-chef-repo
-    gem install berkshelf
+    which berks || gem install berkshelf
     pushd openstack-chef-repo
     rm Berksfile.lock
     berks install
