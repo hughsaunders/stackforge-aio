@@ -124,6 +124,15 @@ prepare_ubuntu_image(){
     nova flavor-create small 10 256 30 1
 }
 
+prepare_cinder_lvm(){
+    apt-get -y install lvm2
+    truncate cinder.img --size 50G
+    loset -f cinder.img
+    loopdev=$(losetup --show -f cinder.img)
+    vgcreate cinder-volumes $loopdev
+}
+
+
 exerstack(){
     git_clone https://github.com/rcbops/exerstack
     pushd exerstack
