@@ -127,6 +127,7 @@ prepare_ubuntu_image(){
 exerstack(){
     git_clone https://github.com/rcbops/exerstack
     pushd exerstack
+    export DEFAULT_IMAGE_NAME="precise"
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
 }
