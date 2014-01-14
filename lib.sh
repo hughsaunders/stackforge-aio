@@ -96,7 +96,12 @@ override_attributes(
     "root_network_acl" => "%"
   },
   "openstack" => {
-    "developer_mode" => true
+    "developer_mode" => true,
+    "compute" => {
+        "libvirt" => {
+            "virt_type" => "qemu"
+        }
+    }
   },
    "glance" => {
      "images" => ["precise","cirros"],
