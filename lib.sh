@@ -22,6 +22,13 @@ setup_ssh(){
     ssh $user@localhost date
 }
 
+setup_sudo(){
+    grep -F '#includedir /etc/sudoers.d' /etc/sudoers || {
+        cp /etc/sudoers{,.bak}
+        sed -i -e '$a#includedir /etc/sudoers.d' /etc/sudoers
+    }
+}
+
 chef_zero(){
    # Install chef-zero server
    install_package ruby1.9.3 build-essential screen

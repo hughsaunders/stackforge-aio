@@ -8,6 +8,7 @@
 
 # Configure ephemeral chef server, upload recipes and configure localhost as
 # client
+setup_sudo
 chef_zero
 setup_knife
 populate_chef_server
