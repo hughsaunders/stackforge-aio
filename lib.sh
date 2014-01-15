@@ -1,3 +1,6 @@
+setup(){
+    apt-get update
+}
 install_package(){
     apt-get -y install $@
 }

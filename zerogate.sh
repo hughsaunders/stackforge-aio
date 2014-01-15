@@ -5,6 +5,7 @@
 
 # Import functions
 . ./lib.sh
+setup
 
 # Configure ephemeral chef server, upload recipes and configure localhost as
 # client
