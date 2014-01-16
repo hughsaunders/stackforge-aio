@@ -171,12 +171,13 @@ prepare_ubuntu_image(){
     nova flavor-create small 10 256 30 1
 }
 
-prepare_cinder_lvm(){
+prepare_cinder(){
     install_package lvm2
     truncate cinder.img --size 50G
     losetup -f cinder.img
     loopdev=$(losetup --show -f cinder.img)
     vgcreate cinder-volumes $loopdev
+    pip install --upgrade oslo.config
 }
 
 
@@ -184,6 +185,8 @@ exerstack(){
     git_clone https://github.com/rcbops/exerstack
     pushd exerstack
     export DEFAULT_IMAGE_NAME="precise"
+    export DEFAULT_INSTANCE_TYPE="small"
+    export BOOT_TIMEOUT=240
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
 }

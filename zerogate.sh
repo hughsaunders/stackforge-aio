@@ -28,5 +28,5 @@ chef-client -o 'role[allinone-compute]'
 prepare_ubuntu_image
 
 # Create lvm vol group for cinder
-prepare_cinder_lvm
+prepare_cinder
 exerstack
