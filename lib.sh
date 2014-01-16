@@ -103,9 +103,40 @@ override_attributes(
   },
   "openstack" => {
     "developer_mode" => true,
+    "identity" =>  {
+        "catalog" => {
+            "backend" => "sql"
+        }
+    },
+    "image" => {
+        "image_upload" => true,
+        "upload_images" => [
+            "cirros"
+        ],
+        "upload_image" => {
+            "cirros" => "https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
+        },
+        "identity_service_chef_role" => "allinone-compute"
+    },
+    "block-storage" => {
+       "keystone_service_chef_role" => "allinone-compute"
+    },
+    "dashboard" => {
+       "keystone_service_chef_role" => "allinone-compute"
+    },
+    "network" => {
+       "rabbit_server_chef_role" => "allinone-compute"
+    },
     "compute" => {
+        "identity_service_chef_role" => "allinone-compute",
         "libvirt" => {
             "virt_type" => "qemu"
+        },
+        "config" => {
+            "ram_allocation_ratio" => 5.0
+        },
+        "network" => {
+            "public_interface" => "eth1"
         },
         "networks" => [
             {
@@ -121,14 +152,7 @@ override_attributes(
             }
         ]
     }
-  },
-   "glance" => {
-     "images" => ["precise","cirros"],
-     "image" => {
-       "cirros" => "https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img",
-       "precise" => "http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img"
-     }
-   }
+  }
   )
 EOF
     knife environment from file env.rb
