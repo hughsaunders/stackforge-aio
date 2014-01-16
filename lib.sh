@@ -1,13 +1,9 @@
-setup(){
-    apt-get update
-}
 install_package(){
     apt-get -y install $@
 }
-
-git_clone(){
-    install_package git
-    git clone $1
+setup(){
+    apt-get update
+    install_package git python-pip
 }
 
 setup_ssh(){
@@ -91,7 +87,7 @@ EOF
 }
 
 populate_chef_server(){
-    git_clone https://github.com/stackforge/openstack-chef-repo
+    git clone https://github.com/stackforge/openstack-chef-repo
     which berks || gem install berkshelf
     pushd openstack-chef-repo
     rm Berksfile.lock
@@ -185,7 +181,7 @@ prepare_cinder(){
 
 
 exerstack(){
-    git_clone https://github.com/rcbops/exerstack
+    git clone https://github.com/rcbops/exerstack
     pushd exerstack
     export DEFAULT_IMAGE_NAME="cirros"
     export DEFAULT_INSTANCE_TYPE="small"
