@@ -168,6 +168,9 @@ bootstrap_chef_client(){
 prepare_ubuntu_image(){
     wget --no-verbose http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
     glance image-create --name=precise --disk-format=qcow2 --container-format=ovf --is-public=True <precise-server-cloudimg-amd64-disk1.img
+}
+
+create_sensible_flavor(){
     nova flavor-create small 10 256 30 1
 }
 
@@ -184,9 +187,9 @@ prepare_cinder(){
 exerstack(){
     git_clone https://github.com/rcbops/exerstack
     pushd exerstack
-    export DEFAULT_IMAGE_NAME="precise"
+    export DEFAULT_IMAGE_NAME="cirros"
     export DEFAULT_INSTANCE_TYPE="small"
-    export BOOT_TIMEOUT=240
+    export BOOT_TIMEOUT=600
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
 }

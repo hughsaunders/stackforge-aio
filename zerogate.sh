@@ -24,8 +24,8 @@ chef-client -o 'role[allinone-compute]'
 # import openstack credentials
 . /root/openrc
 
-# Add ubuntu image to glance
-prepare_ubuntu_image
+# Create flavor With low RAM and some disk.
+create_sensible_flavor
 
 # Create lvm vol group for cinder
 prepare_cinder
