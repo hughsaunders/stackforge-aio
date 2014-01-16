@@ -13,6 +13,10 @@ setup_sudo
 chef_zero
 setup_knife
 populate_chef_server
+
+# should be done before OS deploy so VG is detected.
+prepare_cinder
+
 bootstrap_chef_client
 
 # apply change specific to this gate
@@ -28,5 +32,4 @@ chef-client -o 'role[allinone-compute]'
 create_sensible_flavor
 
 # Create lvm vol group for cinder
-prepare_cinder
 exerstack

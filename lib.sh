@@ -115,20 +115,9 @@ override_attributes(
         ],
         "upload_image" => {
             "cirros" => "https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
-        },
-        "identity_service_chef_role" => "allinone-compute"
-    },
-    "block-storage" => {
-       "keystone_service_chef_role" => "allinone-compute"
-    },
-    "dashboard" => {
-       "keystone_service_chef_role" => "allinone-compute"
-    },
-    "network" => {
-       "rabbit_server_chef_role" => "allinone-compute"
+        }
     },
     "compute" => {
-        "identity_service_chef_role" => "allinone-compute",
         "libvirt" => {
             "virt_type" => "qemu"
         },
