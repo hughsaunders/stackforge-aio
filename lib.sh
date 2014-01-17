@@ -145,6 +145,10 @@ override_attributes(
 EOF
     knife environment from file env.rb
     popd
+
+    #Upload cookbook that has been patched
+    grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"\
+        || knife cookbook upload --force -o . $PROJECT_SHORT
 }
 
 store_env_vars(){
@@ -165,7 +169,6 @@ get_cookbooks(){
     git fetch $GERRIT_REPO $GERRIT_REFSPEC
     git checkout FETCH_HEAD
     popd
-    knife cookbook upload --force -o . $PROJECT_SHORT
 }
 
 bootstrap_chef_client(){
