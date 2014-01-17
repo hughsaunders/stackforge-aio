@@ -10,6 +10,10 @@ setup
 # Configure ephemeral chef server, upload recipes and configure localhost as
 # client
 setup_sudo
+
+# Get cookbooks, including gerrit patch
+get_cookbooks
+
 chef_zero
 setup_knife
 populate_chef_server
@@ -19,8 +23,6 @@ prepare_cinder
 
 bootstrap_chef_client
 
-# apply change specific to this gate
-apply_gerrit_patch
 
 # Deploy openstack
 chef-client -o 'role[allinone-compute]'

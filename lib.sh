@@ -87,7 +87,6 @@ EOF
 }
 
 populate_chef_server(){
-    git clone https://github.com/stackforge/openstack-chef-repo
     which berks || gem install berkshelf
     pushd openstack-chef-repo
     rm Berksfile.lock
@@ -155,11 +154,10 @@ GERRIT_REFSPEC="$GERRIT_REFSPEC"
 EOF
 }
 
-apply_gerrit_patch(){
+get_cookbooks(){
     GERRIT_REPO="https://review.openstack.org/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
-    # openstack-chef-repo is already cloned so only need to clone if testing
-    # a cookbook repo
+    git clone https://github.com/stackforge/openstack-chef-repo
     if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
         git clone $GERRIT_REPO
     fi
