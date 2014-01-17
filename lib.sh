@@ -158,7 +158,11 @@ EOF
 apply_gerrit_patch(){
     GERRIT_REPO="https://review.openstack.org/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
-    git clone $GERRIT_REPO
+    # openstack-chef-repo is already cloned so only need to clone if testing
+    # a cookbook repo
+    if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
+        git clone $GERRIT_REPO
+    fi
     pushd $PROJECT_SHORT
     git fetch $GERRIT_REPO $GERRIT_REFSPEC
     git checkout FETCH_HEAD
