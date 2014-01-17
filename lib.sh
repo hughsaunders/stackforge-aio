@@ -1,10 +1,27 @@
 install_package(){
-    apt-get -y install $@
+    if [ -f /etc/redhat-release ]; then
+        yum -y install  $@
+    else
+        apt-get -y install $@
+    fi
 }
 setup(){
-    apt-get update
-    install_package git python-pip
+    if [ -f /etc/redhat-release ]; then
+        install_package gcc g++ make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel  lvm2 python-pip screen
+
+        #RubyRage
+        curl -sSL https://get.rvm.io | sudo bash -s stable
+        source /usr/local/rvm/scripts/rvm
+        rvm install 1.9.3
+        rvm use 1.9.3
+
+    else
+        apt-get update
+        install_package git python-pip ruby1.9.3 build-essential screen lvm2
+    fi
+    PATH=$PATH:/sbin
 }
+
 
 setup_ssh(){
     # under sudo, ~ expands to non-sudo user dir
@@ -14,9 +31,13 @@ setup_ssh(){
     cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
     echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
 
-    # Jenkins mangles ssh config file? 
+    # Jenkins mangles ssh config file?
     sed -ie 's/PermitRootLogin no//' /etc/ssh/sshd_config
-    /etc/init.d/ssh restart
+    if [ -f /etc/redhat-release ]; then
+        /etc/init.d/sshd restart
+    else
+        /etc/init.d/ssh restart
+    fi
 
     ssh $user@localhost date
 }
@@ -30,8 +51,8 @@ setup_sudo(){
 
 chef_zero(){
    # Install chef-zero server
-   install_package ruby1.9.3 build-essential screen
    which chef-zero || gem install chef-zero
+   [ -f /etc/redhat-release ] && gem install chef
    screen -x chef-zero -X quit >/dev/null ||:
    screen -d -m -S chef-zero chef-zero
 }
@@ -97,7 +118,7 @@ populate_chef_server(){
 name "example"
 override_attributes(
   "mysql" => {
-    "allow_remote_root" => true,
+    "allow_remote_root" => false,
     "root_network_acl" => "%"
   },
   "openstack" => {
@@ -147,7 +168,7 @@ EOF
     popd
 
     #Upload cookbook that has been patched
-    grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"\
+    grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}" \
         || knife cookbook upload --force -o . $PROJECT_SHORT
 }
 
@@ -189,10 +210,9 @@ create_sensible_flavor(){
 }
 
 prepare_cinder(){
-    install_package lvm2
     truncate cinder.img --size 50G
-    losetup -f cinder.img
-    loopdev=$(losetup --show -f cinder.img)
+    /sbin/losetup -f cinder.img
+    loopdev=$(/sbin/losetup --show -f cinder.img)
     vgcreate cinder-volumes $loopdev
     pip install --upgrade oslo.config
 }
