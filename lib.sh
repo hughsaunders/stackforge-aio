@@ -169,6 +169,7 @@ EOF
 
     #Upload cookbook that has been patched
     grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}" || {
+        knife cookbook delete ${PROJECT_SHORT##cookbook-}
         ln -s ${PROJECT_SHORT} ${PROJECT_SHORT##cookbook-}
         knife cookbook upload --force -o . ${PROJECT_SHORT##cookbook-}
     }
