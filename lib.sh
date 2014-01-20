@@ -110,7 +110,7 @@ EOF
 populate_chef_server(){
     which berks || gem install berkshelf
     pushd openstack-chef-repo
-    rm Berksfile.lock
+    [ -f Berksfile.lock ] && rm Berksfile.lock
     berks install
     berks upload
     knife role from file roles/*.rb
