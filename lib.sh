@@ -228,6 +228,14 @@ exerstack(){
     export DEFAULT_INSTANCE_TYPE="small"
     export VOLUME_TIMEOUT=600
     export BOOT_TIMEOUT=600
+    export ACTIVE_TIMEOUT=120
+
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    popd
+}
+
+tempest(){
+    git clone https://github.com/openstack/tempest
+    pushd tempest
     popd
 }
