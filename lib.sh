@@ -226,6 +226,7 @@ exerstack(){
     pushd exerstack
     export DEFAULT_IMAGE_NAME="cirros"
     export DEFAULT_INSTANCE_TYPE="small"
+    export VOLUME_TIMEOUT=600
     export BOOT_TIMEOUT=600
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
