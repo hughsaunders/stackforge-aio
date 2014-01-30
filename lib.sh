@@ -216,7 +216,7 @@ prepare_cinder(){
     /sbin/losetup -f cinder.img
     loopdev=$(/sbin/losetup --show -f cinder.img)
     vgcreate cinder-volumes $loopdev
-    pip install --upgrade oslo.config
+    #pip install --upgrade oslo.config
 }
 
 
