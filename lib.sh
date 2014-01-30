@@ -190,7 +190,7 @@ get_cookbooks(){
         git clone https://github.com/${GERRIT_PROJECT}
     fi
     pushd $PROJECT_SHORT
-    git pull --no-edit $GERRIT_REPO $GERRIT_REFSPEC
+    git pull $GERRIT_REPO $GERRIT_REFSPEC
     popd
 }
 
