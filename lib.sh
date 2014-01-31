@@ -114,7 +114,54 @@ populate_chef_server(){
     berks install
     berks upload
     knife role from file roles/*.rb
-    cat > env.rb <<EOF
+    case $networking in
+    neutron)
+        cat > env.rb <<EOF
+{
+  "name": "example",
+  "description": "Neutron environment for allinone test",
+  "cookbook_versions": {
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+  },
+  "override_attributes": {
+    "openstack": {
+      "developer_mode": true,
+      "network": {
+        "openvswitch": {
+          "local_ip_interface": "eth1"
+        }
+      },
+      "image": {
+        "image_upload": true,
+        "upload_images": [
+          "cirros"
+        ],
+        "upload_image": {
+          "cirros": "https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img"
+        }
+      },
+      "compute": {
+        "network": {
+          "public_interface": "eth1",
+          "service_type": "neutron"
+        },
+        "config": {
+          "ram_allocation_ratio": 5.0
+        },
+        "libvirt": {
+          "virt_type": "qemu"
+        }
+      }
+    }
+  }
+}
+EOF
+        ;;
+    *) #novanetwork
+        cat > env.rb <<EOF
 name "example"
 override_attributes(
   "mysql" => {
@@ -164,6 +211,8 @@ override_attributes(
   }
   )
 EOF
+        ;;
+    esac
     knife environment from file env.rb
     popd
 
@@ -179,6 +228,7 @@ store_env_vars(){
     cat >gerrit_env <<EOF
 GERRIT_PROJECT="$GERRIT_PROJECT"
 GERRIT_REFSPEC="$GERRIT_REFSPEC"
+networking="$networking"
 EOF
 }
 
