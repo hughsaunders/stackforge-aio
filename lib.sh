@@ -117,8 +117,8 @@ populate_chef_server(){
     case $networking in
     neutron)
         cat > env.rb <<EOF
-  name "example"
-  override_attributes(
+name "example"
+override_attributes(
   "openstack" => {
     "developer_mode" => true,
     "image" => {
@@ -143,6 +143,7 @@ populate_chef_server(){
         }
     }
   }
+)
 EOF
         ;;
     *) #novanetwork
