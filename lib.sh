@@ -265,7 +265,14 @@ exerstack(){
     export BOOT_TIMEOUT=600
     export ACTIVE_TIMEOUT=120
 
-    ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    case $networking in
+        neutron)
+            ./exercise.sh havana nova-neutron.sh neutron-cli.sh cinder-cli.sh glance.sh keystone.sh
+            ;;
+        *)
+            ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+            ;;
+    esac
     popd
 }
 
