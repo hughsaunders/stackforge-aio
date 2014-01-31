@@ -147,8 +147,8 @@ EOF
         ;;
     *) #novanetwork
         cat > env.rb <<EOF
-  name "example"
-  override_attributes(
+name "example"
+override_attributes(
   "mysql" => {
     "allow_remote_root" => false,
     "root_network_acl" => "%"
@@ -194,6 +194,7 @@ EOF
         ]
     }
   }
+)
 EOF
         ;;
     esac
