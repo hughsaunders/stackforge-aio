@@ -139,7 +139,7 @@ populate_chef_server(){
         },
         "network" => {
             "public_interface" => "eth1",
-            "service_type": "neutron"
+            "service_type" => "neutron"
         }
     }
   }
