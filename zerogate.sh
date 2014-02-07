@@ -25,9 +25,8 @@ prepare_cinder
 
 bootstrap_chef_client
 
-
 # Deploy openstack
-chef-client -o 'role[allinone-compute]'
+chef-client -o 'role[allinone-compute],tempest::setup'
 
 # import openstack credentials
 . /root/openrc
@@ -35,5 +34,4 @@ chef-client -o 'role[allinone-compute]'
 # Create flavor With low RAM and some disk.
 create_sensible_flavor
 
-# Create lvm vol group for cinder
-exerstack
+tempest

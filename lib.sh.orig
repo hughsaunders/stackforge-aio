@@ -119,7 +119,7 @@ populate_chef_server(){
     bundle install
     bundle exec berks install
     bundle exec berks upload
-    knife role from file roles/*.json
+    knife role from file roles/*.rb
     cat > env.rb <<EOF
 name "example"
 override_attributes(
@@ -265,8 +265,11 @@ exerstack(){
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
 }
+<<<<<<< HEAD
+=======
 
 tempest(){
     cd /opt/tempest
     nosetests
 }
+>>>>>>> Add tempest support
