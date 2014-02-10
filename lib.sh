@@ -267,6 +267,7 @@ exerstack(){
 }
 
 tempest(){
+    pip install nose-html
     cd /opt/tempest
-    nosetests
+    nosetests --with-html
 }
