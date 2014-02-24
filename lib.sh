@@ -11,9 +11,11 @@ setup(){
 
         #RubyRage
         curl -sSL https://get.rvm.io | sudo bash -s stable
+        set +x
         source /usr/local/rvm/scripts/rvm
         rvm install 1.9.3
         rvm use 1.9.3
+        set -x
 
     else
         apt-get update
