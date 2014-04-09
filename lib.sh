@@ -9,8 +9,6 @@ setup(){
     if [ -f /etc/redhat-release ]; then
         install_package gcc make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel  lvm2 python-pip screen
 
-        echo "gem: --no-document" > $HOME/.gemrc
-
         #RubyRage
         curl -sSL https://get.rvm.io | sudo bash -s stable
         set +x
@@ -24,6 +22,8 @@ setup(){
         install_package git python-pip ruby1.9.3 build-essential screen lvm2
     fi
     PATH=$PATH:/sbin
+
+    echo "gem: --no-document" > $HOME/.gemrc
 }
 
 
