@@ -112,14 +112,11 @@ EOF
 }
 
 populate_chef_server(){
-    # we seem to pull in nokogiri-1.6.2.rc1, which requires controlling
-    # terminal
-    gem install nokogiri -v=1.6.1
-    which berks || gem install berkshelf
     pushd openstack-chef-repo
     [ -f Berksfile.lock ] && rm Berksfile.lock
-    berks install
-    berks upload
+    bundle install
+    bundle exec berks install
+    bundle exec berks upload
     knife role from file roles/*.rb
     cat > env.rb <<EOF
 name "example"
