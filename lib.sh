@@ -7,7 +7,9 @@ install_package(){
 }
 setup(){
     if [ -f /etc/redhat-release ]; then
-        install_package gcc g++ make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel  lvm2 python-pip screen
+        install_package gcc make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel  lvm2 python-pip screen
+
+        echo "gem: --no-document" > $HOME/.gemrc
 
         #RubyRage
         curl -sSL https://get.rvm.io | sudo bash -s stable
@@ -110,6 +112,9 @@ EOF
 }
 
 populate_chef_server(){
+    # we seem to pull in nokogiri-1.6.2.rc1, which requires controlling
+    # terminal
+    gem install nokogiri -v=1.6.1
     which berks || gem install berkshelf
     pushd openstack-chef-repo
     [ -f Berksfile.lock ] && rm Berksfile.lock
