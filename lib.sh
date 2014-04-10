@@ -20,6 +20,8 @@ setup(){
     else
         apt-get update
         install_package git python-pip ruby1.9.3 build-essential screen lvm2
+        # rvm's gem already comes w/ bundler, so no need to install on CentOS
+        gem install bundler
     fi
     PATH=$PATH:/sbin
 
