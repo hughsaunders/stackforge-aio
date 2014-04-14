@@ -194,7 +194,7 @@ get_cookbooks(){
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
     git clone --branch ${GERRIT_BRANCH} https://git.openstack.org/stackforge/openstack-chef-repo
     if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
-        git clone https://github.com/${GERRIT_PROJECT}
+        git clone --branch ${GERRIT_BRANCH} https://github.com/${GERRIT_PROJECT}
     fi
     pushd $PROJECT_SHORT
     git pull $GERRIT_REPO $GERRIT_REFSPEC
