@@ -115,7 +115,7 @@ EOF
 
 populate_chef_server(){
     pushd openstack-chef-repo
-    [ -f Berksfile.lock ] && rm Berksfile.lock
+    #[ -f Berksfile.lock ] && rm Berksfile.lock
     bundle install
     bundle exec berks install
     bundle exec berks upload
