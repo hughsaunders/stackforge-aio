@@ -185,13 +185,14 @@ store_env_vars(){
     cat >gerrit_env <<EOF
 GERRIT_PROJECT="$GERRIT_PROJECT"
 GERRIT_REFSPEC="$GERRIT_REFSPEC"
+GERRIT_BRANCH="$GERRIT_BRANCH"
 EOF
 }
 
 get_cookbooks(){
     GERRIT_REPO="https://review.openstack.org/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
-    git clone https://github.com/stackforge/openstack-chef-repo
+    git clone --branch ${GERRIT_BRANCH} https://git.openstack.org/stackforge/openstack-chef-repo
     if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
         git clone https://github.com/${GERRIT_PROJECT}
     fi
