@@ -191,9 +191,22 @@ GERRIT_BRANCH="$GERRIT_BRANCH"
 EOF
 }
 
+get_repo(){
+  repo=$1
+  branch=${2:-master}
+  repo_dir=$(basename $repo)
+    [ -d $repo_dir ] || git clone $repo
+    pushd $repo_dir
+      git fetch
+      git checkout $branch
+      git reset --hard
+      git clean -fd
+    popd
+}
+
 get_parent_repo(){
-    # Always clone parent repo
-    git clone https://git.openstack.org/stackforge/openstack-chef-repo
+  # Always clone parent repo
+  get_repo https://git.openstack.org/stackforge/openstack-chef-repo
 }
 
 get_gerrit_patch(){
@@ -201,11 +214,10 @@ get_gerrit_patch(){
     pushd openstack-chef-repo
       git checkout ${GERRIT_BRANCH}
     popd
-    git clone --branch ${GERRIT_BRANCH} https://git.openstack.org/stackforge/openstack-chef-repo
     GERRIT_REPO="https://review.openstack.org/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
     if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
-        git clone --branch ${GERRIT_BRANCH} https://github.com/${GERRIT_PROJECT}
+        get_repo https://github.com/${GERRIT_PROJECT} ${GERRIT_BRANCH}
     fi
     pushd $PROJECT_SHORT
     git pull $GERRIT_REPO $GERRIT_REFSPEC
@@ -239,7 +251,7 @@ prepare_cinder(){
 
 
 exerstack(){
-    git clone https://github.com/rcbops/exerstack
+    get_repo https://github.com/rcbops/exerstack
     pushd exerstack
     export DEFAULT_IMAGE_NAME="cirros"
     export DEFAULT_INSTANCE_TYPE="small"
@@ -248,11 +260,5 @@ exerstack(){
     export ACTIVE_TIMEOUT=120
 
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
-    popd
-}
-
-tempest(){
-    git clone https://github.com/openstack/tempest
-    pushd tempest
     popd
 }
