@@ -243,9 +243,9 @@ create_sensible_flavor(){
 
 prepare_cinder(){
     truncate cinder.img --size 50G
-    /sbin/losetup -f cinder.img
+    losetup -a |grep -q cinder.img || /sbin/losetup -f cinder.img
     loopdev=$(/sbin/losetup --show -f cinder.img)
-    vgcreate cinder-volumes $loopdev
+    vgs |grep -q cinder-volumes || vgcreate cinder-volumes $loopdev
     #pip install --upgrade oslo.config
 }
 
