@@ -173,14 +173,16 @@ EOF
     knife environment from file env.rb
     popd
 
-    #Upload cookbook that has been patched
-    grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}" || {
-        knife cookbook delete -yap ${PROJECT_SHORT##cookbook-}
-        ln -s ${PROJECT_SHORT} ${PROJECT_SHORT##cookbook-}
-        knife cookbook upload --force -o . ${PROJECT_SHORT##cookbook-}
-    }
 }
 
+upload_patched_cookbook(){
+  #Upload cookbook that has been patched
+  grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}" || {
+      knife cookbook delete -yap ${PROJECT_SHORT##cookbook-}
+      ln -s ${PROJECT_SHORT} ${PROJECT_SHORT##cookbook-}
+      knife cookbook upload --force -o . ${PROJECT_SHORT##cookbook-}
+  }
+}
 store_env_vars(){
     cat >gerrit_env <<EOF
 GERRIT_PROJECT="$GERRIT_PROJECT"
@@ -189,10 +191,19 @@ GERRIT_BRANCH="$GERRIT_BRANCH"
 EOF
 }
 
-get_cookbooks(){
+get_parent_repo(){
+    # Always clone parent repo
+    git clone https://git.openstack.org/stackforge/openstack-chef-repo
+}
+
+get_gerrit_patch(){
+    # If using gerrit, get proposed patch
+    pushd openstack-chef-repo
+      git checkout ${GERRIT_BRANCH}
+    popd
+    git clone --branch ${GERRIT_BRANCH} https://git.openstack.org/stackforge/openstack-chef-repo
     GERRIT_REPO="https://review.openstack.org/${GERRIT_PROJECT}"
     PROJECT_SHORT=$(basename $GERRIT_PROJECT)
-    git clone --branch ${GERRIT_BRANCH} https://git.openstack.org/stackforge/openstack-chef-repo
     if ! grep -q openstack-chef-repo <<<"${GERRIT_PROJECT}"; then
         git clone --branch ${GERRIT_BRANCH} https://github.com/${GERRIT_PROJECT}
     fi

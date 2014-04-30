@@ -12,11 +12,13 @@ setup
 setup_sudo
 
 # Get cookbooks, including gerrit patch
-get_cookbooks
+get_parent_repo
+[ -z "$GERRIT_PROJECT" ] || get_gerrit_patch
 
 chef_zero
 setup_knife
 populate_chef_server
+[ -z "$GERRIT_PROJECT" ] || upload_patched_cookbook
 
 # should be done before OS deploy so VG is detected.
 prepare_cinder
