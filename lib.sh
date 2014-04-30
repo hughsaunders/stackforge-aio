@@ -125,7 +125,9 @@ name "example"
 override_attributes(
   "mysql" => {
     "allow_remote_root" => false,
-    "root_network_acl" => "%"
+    "root_network_acl" => "%",
+    "server_root_password" => "mysql_password",
+    "server_debian_password" => "mysql_debian_password"
   },
   "openstack" => {
     "developer_mode" => true,
@@ -248,6 +250,7 @@ prepare_cinder(){
     vgs |grep -q cinder-volumes || vgcreate cinder-volumes $loopdev
     #pip install --upgrade oslo.config
 }
+
 
 
 exerstack(){
