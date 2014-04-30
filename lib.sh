@@ -223,7 +223,7 @@ get_gerrit_patch(){
     pushd $PROJECT_SHORT
     git pull $GERRIT_REPO $GERRIT_REFSPEC
     popd
-    git clone --branch stackforge_havana https://github.com/hughsaunders/tempest
+    get_repo https://github.com/hughsaunders/tempest stackforge_havana 
 }
 
 bootstrap_chef_client(){

@@ -197,13 +197,21 @@ get_repo(){
   branch=${2:-master}
   repo_dir=$(basename $repo)
     [ -d $repo_dir ] || git clone $repo
+<<<<<<< HEAD
     pushd $repo_dir
+=======
+    pushd $dir
+>>>>>>> add func for idempotent clone
       git fetch
       git checkout $branch
       git reset --hard
       git clean -fd
     popd
+<<<<<<< HEAD
 }
+=======
+
+>>>>>>> add func for idempotent clone
 
 get_parent_repo(){
   # Always clone parent repo
@@ -223,7 +231,7 @@ get_gerrit_patch(){
     pushd $PROJECT_SHORT
     git pull $GERRIT_REPO $GERRIT_REFSPEC
     popd
-    git clone --branch stackforge_havana https://github.com/hughsaunders/tempest
+    get_repo https://github.com/hughsaunders/tempest stackforge_havana 
 }
 
 bootstrap_chef_client(){
@@ -265,11 +273,9 @@ exerstack(){
     ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
     popd
 }
-<<<<<<< HEAD
-=======
 
 tempest(){
+    pip install nose-html
     cd /opt/tempest
-    nosetests
+    nosetests --with-html
 }
->>>>>>> Add tempest support
