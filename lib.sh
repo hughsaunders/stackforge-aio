@@ -235,12 +235,12 @@ bootstrap_chef_client(){
 }
 
 add_aio_role(){
-  host=${1:-localhost}
+  host=${1:-$HOSTNAME}
   knife node run_list add $host 'role[allinone-compute]'
 }
 
 add_tempest_role(){
-  host=${1:-localhost}
+  host=${1:-$HOSTNAME}
   knife node run_list add $host 'role[allinone-compute]'
 }
 
