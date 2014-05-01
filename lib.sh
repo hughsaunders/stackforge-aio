@@ -234,6 +234,16 @@ bootstrap_chef_client(){
     knife bootstrap -E $env $host
 }
 
+add_aio_role(){
+  host=${1:-localhost}
+  knife node run_list add $host 'role[allinone-compute]'
+}
+
+add_tempest_role(){
+  host=${1:-localhost}
+  knife node run_list add $host 'role[allinone-compute]'
+}
+
 prepare_ubuntu_image(){
     wget --no-verbose http://cloud-images.ubuntu.com/precise/current/precise-server-cloudimg-amd64-disk1.img
     glance image-create --name=precise --disk-format=qcow2 --container-format=ovf --is-public=True <precise-server-cloudimg-amd64-disk1.img

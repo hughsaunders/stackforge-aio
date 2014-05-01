@@ -26,7 +26,9 @@ prepare_cinder
 bootstrap_chef_client
 
 # Deploy openstack
-chef-client -o 'role[allinone-compute],tempest::setup'
+add_aio_role
+add_tempest_role
+chef-client
 
 # import openstack credentials
 . /root/openrc
