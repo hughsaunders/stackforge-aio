@@ -241,7 +241,7 @@ add_aio_role(){
 
 add_tempest_role(){
   host=${1:-$HOSTNAME}
-  knife node run_list add $host 'role[allinone-compute]'
+  knife node run_list add $host 'role[tempest::setup]'
 }
 
 prepare_ubuntu_image(){
