@@ -223,7 +223,11 @@ get_gerrit_patch(){
     pushd $PROJECT_SHORT
     git pull $GERRIT_REPO $GERRIT_REFSPEC
     popd
-    get_repo https://github.com/hughsaunders/tempest stackforge_havana 
+}
+
+get_install_tempest_cookbook(){
+    get_repo https://github.com/hughsaunders/tempest stackforge_havana
+    knife cookbook upload tempest -o .
 }
 
 bootstrap_chef_client(){

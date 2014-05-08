@@ -13,6 +13,7 @@ setup_sudo
 
 # Get cookbooks, including gerrit patch
 get_parent_repo
+get_install_tempest_cookbook
 [ -z "$GERRIT_PROJECT" ] || get_gerrit_patch
 
 chef_zero
