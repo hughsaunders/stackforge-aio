@@ -17,8 +17,8 @@ get_parent_repo
 
 chef_zero
 setup_knife
-get_install_tempest_cookbook
 populate_chef_server
+get_install_tempest_cookbook
 [ -z "$GERRIT_PROJECT" ] || upload_patched_cookbook
 
 # should be done before OS deploy so VG is detected.
