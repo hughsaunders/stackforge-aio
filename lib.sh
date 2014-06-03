@@ -119,7 +119,7 @@ populate_chef_server(){
     bundle install
     bundle exec berks install
     bundle exec berks upload
-    knife role from file roles/*.rb
+    knife role from file roles/*.json
     cat > env.rb <<EOF
 name "example"
 override_attributes(
