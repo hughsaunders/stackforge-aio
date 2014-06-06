@@ -7,7 +7,7 @@ install_package(){
 }
 setup(){
     if [ -f /etc/redhat-release ]; then
-        install_package gcc make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel  lvm2 python-pip screen
+        install_package gcc make automake autoconf curl-devel openssl-devel zlib-devel httpd-devel apr-devel apr-util-devel git ruby rubygems ruby-devel lvm2 python-pip screen
 
         #RubyRage
         curl -sSL https://get.rvm.io | sudo bash -s stable
@@ -251,8 +251,6 @@ prepare_cinder(){
     #pip install --upgrade oslo.config
 }
 
-
-
 exerstack(){
     get_repo https://github.com/rcbops/exerstack
     pushd exerstack
@@ -262,6 +260,15 @@ exerstack(){
     export BOOT_TIMEOUT=600
     export ACTIVE_TIMEOUT=120
 
-    ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    if [ "$GERRIT_BRANCH" = "master" ] && [ -f /etc/redhat-release ]; then
+        echo "####################################################"
+        echo "## SKIPPING CINDER TESTS ON ICEHOUSE DUE TO THIS: ##"
+        echo "## https://review.openstack.org/#/c/94828/        ##"
+        echo "####################################################"
+        ./exercise.sh havana glance.sh keystone.sh nova-cli.sh
+    else
+        ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    fi
+
     popd
 }
