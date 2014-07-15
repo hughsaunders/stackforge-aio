@@ -260,7 +260,15 @@ exerstack(){
     export BOOT_TIMEOUT=600
     export ACTIVE_TIMEOUT=120
 
-    ./exercise.sh icehouse cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    if [ "$GERRIT_BRANCH" = "master" ] && [ -f /etc/redhat-release ]; then
+        echo "####################################################"
+        echo "## SKIPPING CINDER TESTS ON ICEHOUSE DUE TO THIS: ##"
+        echo "## https://review.openstack.org/#/c/94828/        ##"
+        echo "####################################################"
+        ./exercise.sh havana glance.sh keystone.sh nova-cli.sh
+    else
+        ./exercise.sh havana cinder-cli.sh glance.sh keystone.sh nova-cli.sh
+    fi
 
     popd
 }
